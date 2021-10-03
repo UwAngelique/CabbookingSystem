@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Customer Panel</title>
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/normalize.css">    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  </head>
+  <body style="background: rgba(19, 35, 47, 0.9);" onload="load_data()">
+    <div class="formcustomer" style="max-width:1000px">
+        <div class="container" style="padding-left:140px;margin-top:50px;">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Customer Panel</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a><b>Welcome!</b></a></li>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="customer_name">
+                      Customer<span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                        <a href="customer_edit_profile.html">
+                            Edit Profile
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        
+                            Logout
+                        </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="jumbotron" id="jumbotron" style="background:white;" >
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#ride_now">Book Now</a></li>
+              <li><a id="tb_ride_history" data-toggle="tab" href="#ride_history">History</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div id="ride_now" class="tab-pane fade in active">
+                <h3>&nbsp;</h3>
+                  <div id="search_ride" style="display: block;">
+                  <form name="fm_driver_list" id="fm_driver_list" action="list.js" method="post">
+                  <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 pull-left">
+                            <div class="btn-group">
+                                <select class="form-control" id="type" name="type" style="width: 140px">
+                                  <option value="TYPE">Cab Type</option>
+                                  <option value="MINI">Mini</option>
+                                  <option value="MICRO">Micro</option>
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Source</span>
+                              <input type="text" class="form-control" placeholder="Enter Location" aria-describedby="sizing-addon2" id="source" name="source" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Destination</span>
+                              <input type="text" class="form-control" placeholder="Enter Location" aria-describedby="sizing-addon2" id="destination" name="destination" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="btn-group" role="group" aria-label="...">
+                              <button type="submit" class="btn btn-default" style="width: 140px">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  </form>
+                  <h3>&nbsp;</h3>
+                    <div id="driver_list_msg">Available Drivers</div>
+                    <table id="table_driver_result" class=table> 
+                        <thead> 
+                            <tr> 
+                                <th>#</th> 
+                                <th>Driver</th> 
+                                <th>Cab Type</th> 
+                                <th>Cab Name</th> 
+                               
+                            </tr> 
+                        </thead> 
+                        <tbody id="results"> 
+                            <tr> 
+                                <th scope=row></th> 
+                                <td></td> 
+                                <td></td> 
+                                <td></td> 
+                                <td></td> 
+                            </tr> 
+                        </tbody> 
+                    </table>
+                    <button type="submit" class="btn btn-default" style="margin-left: 350px; width: 140px;" id="book_ride">Book Cab</button>
+              </div>
+              <div id="ride_details" style="display: none; margin-top: 15px;">
+              <div class="alert alert-info" role="alert" style="background: aliceblue;">
+                  <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="btn-group">
+                                <div class="input-group">
+                                  <span class="input-group-addon" id="sizing-addon2">Driver</span>
+                                  <input type="text" class="form-control" placeholder="Name" aria-describedby="sizing-addon2" id="driver_name" name="driver_name" required disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Source</span>
+                              <input type="text" class="form-control" placeholder="Location" aria-describedby="sizing-addon2" id="details_source" name="details_source" required disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Destination</span>
+                              <input type="text" class="form-control" placeholder="Location" aria-describedby="sizing-addon2" id="details_destination" name="details_destination" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ride_accepted" class="row" style="margin-top: 15px; display: none;">
+                        <div class="col-md-4">
+                            <div class="btn-group">
+                                <div class="input-group">
+                                  <span class="input-group-addon" id="sizing-addon2">Cab</span>
+                                  <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon2" id="cab" name="cab" required disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Mobile</span>
+                              <input type="text" class="form-control" placeholder="Mobile" aria-describedby="sizing-addon2" id="mobile" name="mobile" required disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Plate No.</span>
+                              <input type="text" class="form-control" placeholder="Registration No." aria-describedby="sizing-addon2" id="regno" name="regno" required disabled>
+                            </div>
+                        </div>
+                    </div> 
+              </div>
+              </div>
+              </div>
+              <div id="bill_details" style="display: none;">
+              <div class="alert alert-info" role="alert" style="background: aliceblue;">
+                  <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="btn-group">
+                                <div class="input-group">
+                                  <span class="input-group-addon" id="sizing-addon2">Driver</span>
+                                  <input type="text" class="form-control" placeholder="Name" aria-describedby="sizing-addon2" id="bill_driver_name" name="bill_driver_name" required disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Source</span>
+                              <input type="text" class="form-control" placeholder="Location" aria-describedby="sizing-addon2" id="bill_source" name="bill_source" required disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Destination</span>
+                              <input type="text" class="form-control" placeholder="Location" aria-describedby="sizing-addon2" id="bill_destination" name="bill_destination" required disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="sizing-addon2">Amount</span>
+                              <input type="text" class="form-control" placeholder="Location" aria-describedby="sizing-addon2" id="bill_amount" name="bill_amount" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col-md-2">
+                        </div>
+                        <form name="fm_pay_bill" id="fm_pay_bill" action="" method="post">
+                        <div class="col-md-4">
+                            <div class="btn-group">
+                                <div class="input-group">
+                                  <span class="input-group-addon" id="sizing-addon2">Pay Amount</span>
+                                  <input type="text" class="form-control" placeholder=" " aria-describedby="sizing-addon2" id="amount" name="amount  " required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="btn-group" role="group" aria-label="...">
+                              <button id="bill_pay" type="submit" class="btn btn-default" style="width: 200px;">Pay</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+              </div>
+              </div>
+              </div>
+              </div>
+              <div id="ride_history" class="tab-pane fade">
+                <h3 style="margin: 15px;">Summary of undertaken cabs</h3>
+              
+                <table id="table_customer_history"class=table>
+                    <thead> 
+                        <tr> 
+                            <th>#</th> 
+                            <th>Driver</th> 
+                            <th>Date</th> 
+                            <th>Source</th> 
+                            <th>Destination</th> 
+                            <th>Pickup Time</th>
+                            <th>Drop Time</th>
+                            <th>Distance</th> 
+                            <th>Amount</th> 
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        <tr> 
+                            <th scope=row>1</th> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                        </tr> 
+                    </tbody> 
+                </table> 
+              </div>
+              <div id="menu2" class="tab-pane fade">
+                <h3>Menu 2</h3>
+                <p>Some content in menu 2.</p>
+              </div>
+            </div>
+        </div>
+        </div>
+    </div>
+   <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+    </body>
+</html>
